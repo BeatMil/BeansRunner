@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://xf44hns877ro"]
+
+[ext_resource type="PackedScene" uid="uid://cilrko6miaymr" path="res://my_model/apple2.glb" id="1_x0fui"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4q7ws"]
+
+[node name="apple2" instance=ExtResource("1_x0fui")]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." index="3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
+transform = Transform3D(1.24716, 0, 0, 0, 1.60473, 0, 0, 0, 1.40752, -0.00391388, 0.829453, 0.00812478)
+shape = SubResource("BoxShape3D_4q7ws")
