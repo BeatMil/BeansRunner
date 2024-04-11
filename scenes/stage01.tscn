@@ -41,7 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9265, -0.157326, -17.7667)
 [node name="Obs" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.5825, 6.04903, -17.7667)
 
-[node name="Obstacle01" type="StaticBody3D" parent="Obs"]
+[node name="Obstacle01" type="StaticBody3D" parent="Obs" groups=["wall"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -4.56914, -4)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Obs/Obstacle01"]

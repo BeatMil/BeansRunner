@@ -12,6 +12,7 @@ const MOUSE_SENSITIVITY = 0.03
 var is_dashing = false
 var can_flash_jump = false
 var is_flash_jump = false
+var is_stunned = false
 
 
 var final_speed: float = SPEED
@@ -90,17 +91,18 @@ func _physics_process(delta):
 
 	# Godot Built-in XD
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if is_stunned:
+		input_dir = Vector2.ZERO
+
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * final_speed
-		velocity.z = direction.z * final_speed
+		# velocity.x = direction.x * final_speed
+		velocity.x = move_toward(velocity.x, direction.x*final_speed, 0.5)
+		velocity.z = move_toward(velocity.z, direction.z*final_speed, 0.5)
 	else:
 		pass
 		velocity.x = move_toward(velocity.x, 0, 0.5)
 		velocity.z = move_toward(velocity.z, 0, 0.5)
-
-
-
 
 	float_up_and_down()
 	move_and_slide()
@@ -109,7 +111,6 @@ func _physics_process(delta):
 	prevent_inifinite_fall()
 	$CanvasLayer/VelocityLabel.text = "Velocity: %s" % velocity.length()
 	$CanvasLayer/IsFlashjumpLabel.text = "is_flash_jump: %s" % [is_flash_jump]
-	print($CrouchDashTimer.time_left)
 
 
 func float_up_and_down():
@@ -135,3 +136,22 @@ func _on_dash_refill_timer_timeout():
 
 func _on_flash_jump_timer_timeout():
 	can_flash_jump = true
+
+
+func push(power: int):
+	var direction = (transform.basis * Vector3(0, 0, 1).normalized())
+	if direction:
+		velocity.x = direction.x * power
+		velocity.z = direction.z * power
+
+
+func _on_area_3d_body_entered(body):
+	if body.is_in_group("wall"):
+		print("Velocity: %s" % velocity)
+		push(50)
+		is_stunned = true
+		$StunnedTimer.start()
+
+
+func _on_stunned_timer_timeout():
+	is_stunned = false

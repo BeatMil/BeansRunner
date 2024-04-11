@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dyj4k2qmjnvbp"]
+[gd_scene load_steps=12 format=3 uid="uid://dyj4k2qmjnvbp"]
 
 [ext_resource type="Script" path="res://CharacterBody3D.gd" id="1_rkk8e"]
 [ext_resource type="AudioStream" uid="uid://y1g75k8xv552" path="res://jump.wav" id="2_8al4e"]
@@ -6,6 +6,9 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_bgwjk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gpljw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gtfmq"]
+radius = 0.6
 
 [sub_resource type="Animation" id="Animation_elvp5"]
 resource_name = "flashjump"
@@ -210,6 +213,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="Camera3D" type="Camera3D" parent="head"]
 fov = 80.0
 
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_gtfmq")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="VelocityLabel" type="Label" parent="CanvasLayer"]
@@ -247,11 +256,16 @@ wait_time = 0.05
 autostart = true
 
 [node name="CrouchDashTimer" type="Timer" parent="."]
+editor_description = "Check time_left instead of using signal"
 wait_time = 2.0
 one_shot = true
 
 [node name="FlashJumpTimer" type="Timer" parent="."]
 wait_time = 0.4
+one_shot = true
+
+[node name="StunnedTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -266,5 +280,7 @@ libraries = {
 "": SubResource("AnimationLibrary_5oobs")
 }
 
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="CanvasLayer/DashRefillTimer" to="." method="_on_dash_refill_timer_timeout"]
 [connection signal="timeout" from="FlashJumpTimer" to="." method="_on_flash_jump_timer_timeout"]
+[connection signal="timeout" from="StunnedTimer" to="." method="_on_stunned_timer_timeout"]
