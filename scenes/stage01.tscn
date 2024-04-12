@@ -36,7 +36,7 @@ size = Vector3(2, 1, 2)
 transform = Transform3D(-0.052754, 0, -0.998608, 0, 1, 0, 0.998608, 0, -0.052754, 55.1722, 1.58671, -21.2707)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.864784, 0.502145, 0, -0.502145, 0.864784, 0, 4.71437, 11.7988)
+transform = Transform3D(-0.258819, 0.485035, -0.835317, 0, 0.864783, 0.502145, 0.965926, 0.129965, -0.223823, 0, 4.71437, 11.7988)
 
 [node name="SpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(-0.950927, 0, 0.309415, 0, 1, 0, -0.309415, 0, -0.950927, 3.55349, 0.903179, -15.7381)
