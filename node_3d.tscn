@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://dne5ykg73if6u"]
 
-[ext_resource type="Script" path="res://node_3d.gd" id="1_rs3km"]
-[ext_resource type="PackedScene" uid="uid://dyj4k2qmjnvbp" path="res://Player.tscn" id="3_7isqi"]
+[ext_resource type="Script" path="res://scripts/node_3d.gd" id="1_rs3km"]
+[ext_resource type="PackedScene" uid="uid://cf5tjf413rmov" path="res://Player.tscn" id="3_7isqi"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0hytl"]
 cull_mode = 2

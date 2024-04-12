@@ -151,6 +151,7 @@ func _on_area_3d_body_entered(body):
 		push(50)
 		is_stunned = true
 		$StunnedTimer.start()
+		$SoundPlayer2.play("hit_wall")
 
 
 func _on_stunned_timer_timeout():

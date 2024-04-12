@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctvnvdkyaofbx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q0bkb"]
+size = Vector3(2, 20, 40)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1te8l"]
+size = Vector3(2, 20, 40)
+
+[sub_resource type="Animation" id="Animation_tynvv"]
+resource_name = "moving"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 1.5, 2.5),
+"transitions": PackedFloat32Array(-2, 1, 1, -2),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 40), Vector3(0, 0, 40), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_sap0h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l8us2"]
+_data = {
+"RESET": SubResource("Animation_sap0h"),
+"moving": SubResource("Animation_tynvv")
+}
+
+[node name="MovingWall" type="StaticBody3D" groups=["wall"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_q0bkb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("BoxMesh_1te8l")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "moving"
+libraries = {
+"": SubResource("AnimationLibrary_l8us2")
+}
