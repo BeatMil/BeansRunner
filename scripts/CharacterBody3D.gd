@@ -14,6 +14,9 @@ var can_flash_jump = false
 var is_flash_jump = false
 var is_stunned = false
 
+# pov helper
+var is_pov_up = false
+
 
 var final_speed: float = SPEED
 
@@ -21,13 +24,13 @@ var final_speed: float = SPEED
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	$CanvasLayer/ProgressBar.value = 900
 	print(deg_to_rad(-80))
 	print(deg_to_rad(80))
 	print(transform.basis)
+		
 
 
 func _input(event):
@@ -109,6 +112,7 @@ func _physics_process(delta):
 
 	# others
 	prevent_inifinite_fall()
+	adjust_pov()
 	$CanvasLayer/VelocityLabel.text = "Velocity: %s" % velocity.length()
 	$CanvasLayer/IsFlashjumpLabel.text = "is_flash_jump: %s" % [is_flash_jump]
 
@@ -136,6 +140,21 @@ func _on_dash_refill_timer_timeout():
 
 func _on_flash_jump_timer_timeout():
 	can_flash_jump = true
+
+
+
+func adjust_pov():
+	# weird way of doing me thing...
+	var x_z_velocity: Vector2 = Vector2(velocity.x, velocity.z)
+	# tween
+	if x_z_velocity.length() >= 25 and not is_pov_up:
+		is_pov_up = true
+		var tween = create_tween()
+		tween.tween_property($head/Camera3D, "fov", 120, 1)
+	elif x_z_velocity.length() < 25 and is_pov_up:
+		is_pov_up = false
+		var tween = create_tween()
+		tween.tween_property($head/Camera3D, "fov", 80, 1)
 
 
 func push(power: int):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cf5tjf413rmov"]
+[gd_scene load_steps=19 format=3 uid="uid://cf5tjf413rmov"]
 
 [ext_resource type="Script" path="res://scripts/CharacterBody3D.gd" id="1_h6qok"]
 [ext_resource type="AudioStream" uid="uid://y1g75k8xv552" path="res://media/sfx/jump.wav" id="2_cqbtq"]
@@ -329,29 +329,63 @@ _data = {
 "hit_wall": SubResource("Animation_8tkfb")
 }
 
+[sub_resource type="Animation" id="Animation_7v6v2"]
+resource_name = "pov_up"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/Camera3D:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [80.0, 100.0]
+}
+
+[sub_resource type="Animation" id="Animation_q2dy4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/Camera3D:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [80.0]
+}
+
+[sub_resource type="Animation" id="Animation_y7ayv"]
+resource_name = "pov_down"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("head/Camera3D:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [100.0, 80.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_10lgc"]
+_data = {
+"RESET": SubResource("Animation_q2dy4"),
+"pov_down": SubResource("Animation_y7ayv"),
+"pov_up": SubResource("Animation_7v6v2")
+}
+
 [node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(-0.950927, 0, 0.309415, 0, 1, 0, -0.309415, 0, -0.950927, 0, 0, 0)
 script = ExtResource("1_h6qok")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_bgwjk")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0, 0)
-visible = false
-shape = SubResource("CapsuleShape3D_gpljw")
-
-[node name="head" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="Camera3D" type="Camera3D" parent="head"]
-fov = 80.0
-
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 1, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("CapsuleShape3D_gtfmq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -389,6 +423,26 @@ value = 20.0
 wait_time = 0.05
 autostart = true
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_bgwjk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0, 0)
+visible = false
+shape = SubResource("CapsuleShape3D_gpljw")
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="head"]
+fov = 80.0
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, -8.9407e-08, 0, 1, 0, 8.9407e-08, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CapsuleShape3D_gtfmq")
+
 [node name="CrouchDashTimer" type="Timer" parent="."]
 editor_description = "Check time_left instead of using signal"
 wait_time = 2.0
@@ -421,7 +475,12 @@ libraries = {
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="SoundPlayer2"]
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[node name="CameraPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_10lgc")
+}
+
 [connection signal="timeout" from="CanvasLayer/DashRefillTimer" to="." method="_on_dash_refill_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="FlashJumpTimer" to="." method="_on_flash_jump_timer_timeout"]
 [connection signal="timeout" from="StunnedTimer" to="." method="_on_stunned_timer_timeout"]
