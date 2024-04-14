@@ -48,7 +48,7 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * 8 * delta
-		if $ioyoteTimer.time_left == 0 and coyote_jump_helper:
+		if $CoyoteTimer.time_left == 0 and coyote_jump_helper:
 			$CoyoteTimer.start()
 			coyote_jump_helper = false
 	elif is_on_floor():

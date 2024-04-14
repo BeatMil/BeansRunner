@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d14ssrntmjs4e"]
+
+[ext_resource type="PackedScene" uid="uid://dxc2dscx3cnl0" path="res://my_model/RedFlag.glb" id="1_fo7xh"]
+
+[node name="RedFlag" type="Node3D"]
+
+[node name="RedFlag" parent="." instance=ExtResource("1_fo7xh")]
