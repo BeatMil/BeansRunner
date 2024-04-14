@@ -12,25 +12,6 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gtfmq"]
 radius = 0.6
 
-[sub_resource type="Animation" id="Animation_elvp5"]
-resource_name = "flashjump"
-length = 0.2
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimationPlayer/AudioStreamPlayer")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("2_cqbtq")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-
 [sub_resource type="Animation" id="Animation_pveuh"]
 resource_name = "dash"
 length = 0.8
@@ -45,6 +26,25 @@ tracks/0/keys = {
 "end_offset": 0.0,
 "start_offset": 0.0,
 "stream": ExtResource("3_svm22")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="Animation" id="Animation_elvp5"]
+resource_name = "flashjump"
+length = 0.2
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer/AudioStreamPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_cqbtq")
 }],
 "times": PackedFloat32Array(0)
 }
@@ -500,6 +500,10 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_fscg8")
@@ -536,3 +540,4 @@ libraries = {
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="FlashJumpTimer" to="." method="_on_flash_jump_timer_timeout"]
 [connection signal="timeout" from="StunnedTimer" to="." method="_on_stunned_timer_timeout"]
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]

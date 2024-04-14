@@ -1,9 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://bwwscdkeq574o"]
+[gd_scene load_steps=16 format=3 uid="uid://bwwscdkeq574o"]
 
 [ext_resource type="PackedScene" uid="uid://cf5tjf413rmov" path="res://Player.tscn" id="1_pjvnp"]
 [ext_resource type="Texture2D" uid="uid://b58bsyybtfgv4" path="res://Metal_Panels_009_basecolor.jpg" id="3_054f7"]
 [ext_resource type="PackedScene" uid="uid://ctvnvdkyaofbx" path="res://nodes/moving_wall.tscn" id="3_k01xf"]
+[ext_resource type="PackedScene" uid="uid://bnvhtvhkiqiom" path="res://nodes/floor_block.tscn" id="5_dwsa0"]
 [ext_resource type="PackedScene" uid="uid://xf44hns877ro" path="res://scenes/apple_2.tscn" id="5_spaby"]
+
+[sub_resource type="Environment" id="Environment_hj78e"]
+background_mode = 1
+background_color = Color(0.25098, 0.415686, 0.501961, 1)
+ambient_light_color = Color(0.662745, 0.486275, 0.533333, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_rp2ab"]
 size = Vector3(1, 3, 40)
@@ -24,16 +30,19 @@ size = Vector3(40, 1, 600)
 [sub_resource type="PlaneMesh" id="PlaneMesh_ittsi"]
 size = Vector2(40, 600)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fw6xu"]
+rough = true
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_skjrf"]
 size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_rsmsr"]
 size = Vector3(20, 1, 20)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fw6xu"]
-rough = true
-
 [node name="stage01" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hj78e")
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_pjvnp")]
 transform = Transform3D(-0.052754, 0, -0.998608, 0, 1, 0, 0.998608, 0, -0.052754, 7.1722, 1.58671, -33.2707)
@@ -133,36 +142,34 @@ skeleton = NodePath("../../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Map/floor9"]
 shape = SubResource("BoxShape3D_6ajli")
 
+[node name="MoreMap" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.5356, 1.52588e-05, -17.2374)
+
 [node name="MovingWalls" type="Node3D" parent="."]
 
 [node name="MovingWall" parent="MovingWalls" instance=ExtResource("3_k01xf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 212, 10, -61)
+time_before_start = 1.0
 
 [node name="MovingWall2" parent="MovingWalls" instance=ExtResource("3_k01xf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 294.542, 10, -61)
+time_before_start = 3.0
 
 [node name="MovingWall3" parent="MovingWalls" instance=ExtResource("3_k01xf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 383.375, 10, -61)
+time_before_start = 5.0
 
 [node name="MovingWall4" parent="MovingWalls" instance=ExtResource("3_k01xf")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 253.375, 10, 19)
+time_before_start = 2.0
 
 [node name="MovingWall5" parent="MovingWalls" instance=ExtResource("3_k01xf")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 345.036, 10, 19)
+time_before_start = 4.0
 
 [node name="MovingWall6" parent="MovingWalls" instance=ExtResource("3_k01xf")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 417.994, 10, 19)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, 19, 0, 13)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("BoxShape3D_skjrf")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
-mesh = SubResource("BoxMesh_rsmsr")
+time_before_start = 6.0
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="."]
 transform = Transform3D(0.988923, 0.148431, 0, -0.148431, 0.988923, 0, 0, 0, 1, -3.61585, -1.90735e-06, 8.54032)
@@ -175,3 +182,14 @@ shape = SubResource("BoxShape3D_skjrf")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/CollisionShape3D"]
 mesh = SubResource("BoxMesh_rsmsr")
+
+[node name="MoreMap2" type="Node3D" parent="."]
+
+[node name="floor_block" parent="MoreMap2" instance=ExtResource("5_dwsa0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29, 0, -10)
+
+[node name="floor_block2" parent="MoreMap2" instance=ExtResource("5_dwsa0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84, 0, -10)
+
+[node name="floor_block3" parent="MoreMap2" instance=ExtResource("5_dwsa0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -135, 7, -21)

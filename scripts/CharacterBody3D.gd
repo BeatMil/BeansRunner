@@ -14,6 +14,7 @@ var can_flash_jump = false
 var is_flash_jump = false
 var is_stunned = false
 var can_double_jump = true
+var coyote_jump_helper = true
 
 # pov helper
 var is_pov_up = false
@@ -47,8 +48,12 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * 8 * delta
+		if $ioyoteTimer.time_left == 0 and coyote_jump_helper:
+			$CoyoteTimer.start()
+			coyote_jump_helper = false
 	elif is_on_floor():
 		can_double_jump = true
+		coyote_jump_helper = true
 		if $CrouchDashTimer.time_left > 0:
 			is_flash_jump = true
 		else:
@@ -77,18 +82,24 @@ func _physics_process(delta):
 		is_dashing = false
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		# Stop coyote jump
+		coyote_jump_helper = false
 
 		if can_flash_jump == true:
 			is_flash_jump = true
 			$AnimationPlayer.play("flashjump")
 	
+	# Handle Coyote Jump.
+	if Input.is_action_just_pressed("jump") and not is_on_floor() and $CoyoteTimer.time_left > 0:
+		velocity.y = JUMP_VELOCITY
+		$CoyoteTimer.stop()
+		can_double_jump = true
 	# Handle Double Jump.
-	if Input.is_action_just_pressed("ui_accept") and not is_on_floor() and can_double_jump:
+	elif Input.is_action_just_pressed("jump") and not is_on_floor() and can_double_jump:
 		velocity.y = JUMP_VELOCITY
 		can_double_jump = false
-
 
 	# Handle Crouch
 	if Input.is_action_just_pressed("crouch"):
@@ -104,7 +115,6 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if is_stunned:
 		input_dir = Vector2.ZERO
-
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		# velocity.x = direction.x * final_speed
@@ -178,7 +188,14 @@ func _on_area_3d_body_entered(body):
 		is_stunned = true
 		$StunnedTimer.start()
 		$SoundPlayer2.play("hit_wall")
+	elif body.is_in_group("crushing_ceiling"):
+		position = $"../SpawnPoint".position
+		$head.rotation = Vector3.ZERO
 
 
 func _on_stunned_timer_timeout():
 	is_stunned = false
+
+
+func _on_coyote_timer_timeout():
+	pass
