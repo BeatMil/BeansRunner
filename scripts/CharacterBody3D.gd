@@ -13,6 +13,7 @@ var is_dashing = false
 var can_flash_jump = false
 var is_flash_jump = false
 var is_stunned = false
+var can_double_jump = true
 
 # pov helper
 var is_pov_up = false
@@ -47,6 +48,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * 8 * delta
 	elif is_on_floor():
+		can_double_jump = true
 		if $CrouchDashTimer.time_left > 0:
 			is_flash_jump = true
 		else:
@@ -81,6 +83,12 @@ func _physics_process(delta):
 		if can_flash_jump == true:
 			is_flash_jump = true
 			$AnimationPlayer.play("flashjump")
+	
+	# Handle Double Jump.
+	if Input.is_action_just_pressed("ui_accept") and not is_on_floor() and can_double_jump:
+		velocity.y = JUMP_VELOCITY
+		can_double_jump = false
+
 
 	# Handle Crouch
 	if Input.is_action_just_pressed("crouch"):
