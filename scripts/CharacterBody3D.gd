@@ -32,7 +32,6 @@ func _ready():
 	print(transform.basis)
 		
 
-
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENSITIVITY))
@@ -63,6 +62,7 @@ func _physics_process(delta):
 	# Handel Dash
 	if Input.is_action_just_pressed("dash"):
 		$FlashJumpTimer.start()
+		$SoundPlayer3.play("dash") # sfx
 	elif Input.is_action_just_released("dash"):
 		can_flash_jump = false
 	if Input.is_action_pressed("dash"):
@@ -140,7 +140,6 @@ func _on_dash_refill_timer_timeout():
 
 func _on_flash_jump_timer_timeout():
 	can_flash_jump = true
-
 
 
 func adjust_pov():
