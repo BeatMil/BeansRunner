@@ -427,7 +427,7 @@ _data = {
 "pov_up": SubResource("Animation_7v6v2")
 }
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="CharacterBody3D" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(-0.950927, 0, 0.309415, 0, 1, 0, -0.309415, 0, -0.950927, 0, 0, 0)
 script = ExtResource("1_h6qok")
 
@@ -472,7 +472,6 @@ mesh = SubResource("CapsuleMesh_bgwjk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, 1, 0, 0, 0)
-visible = false
 shape = SubResource("CapsuleShape3D_gpljw")
 
 [node name="head" type="Node3D" parent="."]

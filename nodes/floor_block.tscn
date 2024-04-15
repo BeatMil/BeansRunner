@@ -1,15 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnvhtvhkiqiom"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ns2c0"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_iqbly"]
 size = Vector3(16, 1, 16)
 
-[sub_resource type="BoxMesh" id="BoxMesh_0xvrp"]
+[sub_resource type="BoxMesh" id="BoxMesh_nfela"]
 size = Vector3(16, 1, 16)
 
 [node name="floor_block" type="StaticBody3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_ns2c0")
+shape = SubResource("BoxShape3D_iqbly")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
-mesh = SubResource("BoxMesh_0xvrp")
+mesh = SubResource("BoxMesh_nfela")

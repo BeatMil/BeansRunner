@@ -9,6 +9,7 @@ const JUMP_VELOCITY = 32
 const MOUSE_SENSITIVITY = 0.03
 
 
+## If true, player is dashing.
 var is_dashing = false
 var can_flash_jump = false
 var is_flash_jump = false
@@ -183,7 +184,6 @@ func push(power: int):
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("wall"):
-		print("Velocity: %s" % velocity)
 		push(50)
 		is_stunned = true
 		$StunnedTimer.start()
@@ -191,6 +191,12 @@ func _on_area_3d_body_entered(body):
 	elif body.is_in_group("crushing_ceiling"):
 		position = $"../SpawnPoint".position
 		$head.rotation = Vector3.ZERO
+
+
+func get_hit_by_slime():
+		push(50)
+		is_stunned = true
+		$StunnedTimer.start()
 
 
 func _on_stunned_timer_timeout():
