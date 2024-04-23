@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://m8adr2rpf7iu"]
+
+[ext_resource type="Script" path="res://scripts/cannon_ball.gd" id="1_vcd0s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_62oir"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_bp11c"]
+
+[node name="CannonBall" type="RigidBody3D"]
+script = ExtResource("1_vcd0s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("SphereShape3D_62oir")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("SphereMesh_bp11c")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)

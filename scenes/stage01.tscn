@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cln84umpkv55a"]
+[gd_scene load_steps=7 format=3 uid="uid://cln84umpkv55a"]
 
 [ext_resource type="PackedScene" uid="uid://cf5tjf413rmov" path="res://Player.tscn" id="1_pjvnp"]
 [ext_resource type="PackedScene" uid="uid://pvj8c1hj5jrw" path="res://nodes/long_floor_block.tscn" id="3_xmqte"]
 [ext_resource type="PackedScene" uid="uid://c33yftangyvlw" path="res://nodes/slime.tscn" id="4_g2m2c"]
 [ext_resource type="PackedScene" uid="uid://bnvhtvhkiqiom" path="res://nodes/floor_block.tscn" id="5_dwsa0"]
+[ext_resource type="PackedScene" uid="uid://m8adr2rpf7iu" path="res://nodes/cannon_ball.tscn" id="5_fu8x7"]
 
 [sub_resource type="Environment" id="Environment_s0en1"]
 background_mode = 1
@@ -57,3 +58,7 @@ transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4.82469,
 
 [node name="Sime9" parent="." instance=ExtResource("4_g2m2c")]
 transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 4.82469, 1.07638, -56.4172)
+
+[node name="CannonBall" parent="." instance=ExtResource("5_fu8x7")]
+transform = Transform3D(-0.25, 0.0669873, -0.965926, 0.258819, 0.965926, 0, 0.933013, -0.25, -0.258819, 62.2195, 66.3109, -159.041)
+gravity_scale = 0.0
